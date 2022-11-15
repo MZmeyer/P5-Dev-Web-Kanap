@@ -1,11 +1,20 @@
 fetch("http://localhost:3000/api/products")
     .then((res) => res.json())
-    .then((donnees) =>  produit(donnees))
+    .then((donnees) =>  {
+        return produit(donnees)
+    })
 
 function  produit (donnees){
     let id = donnees[0]._id
+    let imageUrl = donnees[0].imageUrl
+    let altTxt = donnees[0].altTxt
+    let image = makeImg(imageUrl, altTxt)
     let anchor = makeA(id)
-    itemChild(anchor)
+    let article = makeArticle()
+    article.appendChild(image)
+    itemChild(anchor, article)
+    
+    
 }   
  
 function makeA(id)    {
@@ -15,20 +24,30 @@ function makeA(id)    {
 }
     
 
-function itemChild(anchor) {
+function itemChild(anchor, article) {
     let items = document.getElementById("items")
     if (items!=null){
     items.appendChild(anchor)
+    anchor.appendChild(article)
     }
+}
+
+function makeImg(imageUrl, altTxt) {
+    let image = document.createElement("img")
+    image.src = imageUrl
+    image.alt = altTxt
+    return image
 }
 
 function makeArticle() {
     let article = document.createElement("article")
-    let img = makeImg()
-    let h3 = makeH3()
-    let p = makeP()
-    article.appendChild(img)
-    article.appendChild(h3)
-    article.appendChild(p)
+    
+    
     return article
+}
+
+function makeH3(name) {
+    let h3 = document.createElement("h3")
+    h3.textContent = name
+    return h3
 }
