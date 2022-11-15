@@ -8,10 +8,16 @@ function  produit (donnees){
     let id = donnees[0]._id
     let imageUrl = donnees[0].imageUrl
     let altTxt = donnees[0].altTxt
+    let name = donnees[0].name
+    let description = donnees[0].description
     let image = makeImg(imageUrl, altTxt)
     let anchor = makeA(id)
     let article = makeArticle()
+    let h3 = makeH3(name)
+    let p = makeP(description)
     article.appendChild(image)
+    article.appendChild(h3)
+    article.appendChild(p)
     itemChild(anchor, article)
     
     
@@ -49,5 +55,12 @@ function makeArticle() {
 function makeH3(name) {
     let h3 = document.createElement("h3")
     h3.textContent = name
+    h3.classList.add("productName")
     return h3
+}
+function makeP(description) {
+    let p = document.createElement("p")
+    p.textContent = description
+    p.classList.add("productDescription")
+    return p
 }
