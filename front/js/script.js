@@ -21,3 +21,14 @@ function itemChild(anchor) {
     items.appendChild(anchor)
     }
 }
+
+function makeArticle() {
+    let article = document.createElement("article")
+    let img = makeImg()
+    let h3 = makeH3()
+    let p = makeP()
+    article.appendChild(img)
+    article.appendChild(h3)
+    article.appendChild(p)
+    return article
+}
