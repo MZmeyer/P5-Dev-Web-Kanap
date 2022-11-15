@@ -5,27 +5,27 @@ fetch("http://localhost:3000/api/products")
     })
 
 function  produit (donnees){
-    let id = donnees[0]._id
-    let imageUrl = donnees[0].imageUrl
-    let altTxt = donnees[0].altTxt
-    let name = donnees[0].name
-    let description = donnees[0].description
-    let image = makeImg(imageUrl, altTxt)
-    let anchor = makeA(id)
-    let article = makeArticle()
+
+    donnees.forEach((canap) => {
+        
+    
+    let  {_id,imageUrl,altTxt,name,description} =canap     
+      
+    let image = makeImg(imageUrl, altTxt)        
+    let anchor = makeA(_id)
+    let article = document.createElement("article")
     let h3 = makeH3(name)
     let p = makeP(description)
     article.appendChild(image)
     article.appendChild(h3)
     article.appendChild(p)
-    itemChild(anchor, article)
-    
-    
+    itemChild(anchor, article)  
+})
 }   
  
-function makeA(id)    {
+function makeA(_id)    {
     let anchor = document.createElement("a")
-    anchor.href="./product.html?id="+id
+    anchor.href="./product.html?id="+_id
     return anchor
 }
     
@@ -45,12 +45,7 @@ function makeImg(imageUrl, altTxt) {
     return image
 }
 
-function makeArticle() {
-    let article = document.createElement("article")
-    
-    
-    return article
-}
+
 
 function makeH3(name) {
     let h3 = document.createElement("h3")
