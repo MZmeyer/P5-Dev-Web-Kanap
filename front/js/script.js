@@ -10,7 +10,7 @@ function  produit (donnees){
         
     
     let  {_id,imageUrl,altTxt,name,description} =canap     
-      
+    debugger;  
     let image = makeImg(imageUrl, altTxt)        
     let anchor = makeA(_id)
     let article = document.createElement("article")
