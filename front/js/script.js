@@ -9,8 +9,7 @@ function  produit (donnees){
     donnees.forEach((canap) => {
         
     
-    let  {_id,imageUrl,altTxt,name,description} =canap     
-    debugger;  
+    let  {_id,imageUrl,altTxt,name,description} =canap       
     let image = makeImg(imageUrl, altTxt)        
     let anchor = makeA(_id)
     let article = document.createElement("article")
