@@ -19,6 +19,7 @@ function Pageproduit(canap){
     Titre(name)
     Prix(price)
     Description(description)
+    Couleurs(colors)
 }
 
 function Image(imageUrl,altTxt){
@@ -42,3 +43,14 @@ function Description(description){
     let p = document.getElementById("description")
     p.textContent = description
 }
+function Couleurs(colors){
+    let select = document.getElementById("colors")
+    for (let i = 0; i < colors.length; i++){
+    let option = document.createElement("option")
+    option.value = colors
+    option.textContent = colors
+    select.appendChild(option)
+    }
+    
+  } 
+
