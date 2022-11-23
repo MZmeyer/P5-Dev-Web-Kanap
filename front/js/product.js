@@ -17,6 +17,7 @@ function Pageproduit(canap){
     let _id = canap._id
     Image(imageUrl,altTxt)
     Titre(name)
+    Prix(price)
 }
 
 function Image(imageUrl,altTxt){
@@ -28,6 +29,10 @@ function Image(imageUrl,altTxt){
 
 }
 function Titre(name){
-    let h1 = document.querySelector("#title")
+    let h1 = document.getElementById("title")
     h1.textContent = name
+}
+function Prix(price){
+    let span = document.getElementById("price")
+    span.textContent = price
 }
