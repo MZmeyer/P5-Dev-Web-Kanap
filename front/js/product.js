@@ -18,6 +18,7 @@ function Pageproduit(canap){
     Image(imageUrl,altTxt)
     Titre(name)
     Prix(price)
+    Description(description)
 }
 
 function Image(imageUrl,altTxt){
@@ -35,4 +36,9 @@ function Titre(name){
 function Prix(price){
     let span = document.getElementById("price")
     span.textContent = price
+}
+
+function Description(description){
+    let p = document.getElementById("description")
+    p.textContent = description
 }
