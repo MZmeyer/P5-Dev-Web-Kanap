@@ -5,4 +5,25 @@ console.log(id);
 
 fetch(`http://localhost:3000/api/products/${id}`)
     .then((res) => res.json())
-    .then((res) => console.log(res))
+    .then((res) => Pageproduit(res))
+
+function Pageproduit(canap){
+    let altTxt = canap.altTxt
+    let colors = canap.colors
+    let description = canap.description
+    let imageUrl = canap.imageUrl
+    let name = canap.name
+    let price = canap.price
+    let _id = canap._id
+    Image(imageUrl,altTxt)
+
+}
+
+function Image(imageUrl,altTxt){
+    let image = document.createElement("img")
+    image.src = imageUrl
+    image.alt = altTxt
+    let Elem = document.querySelector(".item__img")
+    Elem.appendChild(image)
+
+}
