@@ -13,16 +13,15 @@ function Pageproduit(canap){
     let description = canap.description
     let imageUrl = canap.imageUrl
     let name = canap.name
-    let price = canap.price
-    let _id = canap._id
-    Image(imageUrl,altTxt)
+    let price = canap.price    
+    Picture(imageUrl,altTxt)
     Titre(name)
     Prix(price)
     Description(description)
     Couleurs(colors)
 }
 
-function Image(imageUrl,altTxt){
+function Picture(imageUrl,altTxt){
     let image = document.createElement("img")
     image.src = imageUrl
     image.alt = altTxt
