@@ -53,3 +53,5 @@ function Couleurs(colors){
     
   } 
 
+  let button = document.getElementById("addToCart")
+  
