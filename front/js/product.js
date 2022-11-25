@@ -5,7 +5,7 @@ console.log(id);
 
 fetch(`http://localhost:3000/api/products/${id}`)
     .then((res) => res.json())
-    .then((res) => Pageproduit(res))
+    .then((canap) => Pageproduit(canap))
 
 function Pageproduit(canap){
     let altTxt = canap.altTxt
@@ -43,15 +43,24 @@ function Description(description){
     p.textContent = description
 }
 function Couleurs(colors){
+    
     let select = document.getElementById("colors")
-    for (let i = 0; i < colors.length; i++){
+    for (let color of colors){
     let option = document.createElement("option")
-    option.value = colors
-    option.textContent = colors
+    option.value = color
+    option.textContent = color
     select.appendChild(option)
     }
     
   } 
 
   let button = document.getElementById("addToCart")
+
+  button.addEventListener("click",(event) =>{
+    let colors = document.getElementById("colors").value
+    let quantity = document.getElementById("quantity").value
+    
+  
+  }
+  )
   
