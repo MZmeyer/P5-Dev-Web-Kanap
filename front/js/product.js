@@ -56,11 +56,16 @@ function Couleurs(colors){
 
   let button = document.getElementById("addToCart")
 
-  button.addEventListener("click",(event) =>{
+  button.addEventListener("click",(e) =>{
     let colors = document.getElementById("colors").value
     let quantity = document.getElementById("quantity").value
-    
-  
+
+    const cart = {
+        id:id,
+        colors:colors,
+        quantity:quantity
+    } 
+    localStorage.setItem(id,JSON.stringify(cart)) 
   }
   )
   
