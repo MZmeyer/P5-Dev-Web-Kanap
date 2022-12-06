@@ -60,12 +60,13 @@ function Couleurs(colors){
     let colors = document.getElementById("colors").value
     let quantity = document.getElementById("quantity").value
 
-    const cart = {
+    const Cart = {
         id:id,
         colors:colors,
         quantity:quantity
     } 
-    localStorage.setItem(id,JSON.stringify(cart)) 
+    localStorage.setItem(id,JSON.stringify(Cart)) 
+    window.location.href = "cart.html"
   }
   )
   
