@@ -1,11 +1,15 @@
 let url = window.location.search
 let urlparam = new URLSearchParams(url)
 let id = urlparam.get("id")
+let imgUrl ,altText
 console.log(id);
+
 
 fetch(`http://localhost:3000/api/products/${id}`)
     .then((res) => res.json())
     .then((canap) => Pageproduit(canap))
+    
+    
 
 function Pageproduit(canap){
     let altTxt = canap.altTxt
@@ -13,7 +17,9 @@ function Pageproduit(canap){
     let description = canap.description
     let imageUrl = canap.imageUrl
     let name = canap.name
-    let price = canap.price    
+    let price = canap.price
+    imgUrl=canap.imageUrl
+    altText=canap.altTxt
     Picture(imageUrl,altTxt)
     Titre(name)
     Prix(price)
@@ -57,16 +63,19 @@ function Couleurs(colors){
   let button = document.getElementById("addToCart")
 
   button.addEventListener("click",(e) =>{
-    let colors = document.getElementById("colors").value
-    let quantity = document.getElementById("quantity").value
-
-    const Cart = {
+    let color = document.getElementById("colors").value
+    let quantity = document.getElementById("quantity").value    
+      
+        const Cart = {
         id:id,
-        colors:colors,
-        quantity:quantity
+        color:color,
+        quantity:Number(quantity),
+        imageUrl:imgUrl,
+        altTxt:altText
     } 
     localStorage.setItem(id,JSON.stringify(Cart)) 
     window.location.href = "cart.html"
-  }
-  )
+  })
+
+  
   
