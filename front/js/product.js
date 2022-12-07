@@ -1,7 +1,7 @@
 let url = window.location.search
 let urlparam = new URLSearchParams(url)
 let id = urlparam.get("id")
-let imgUrl ,altText
+let imgUrl ,altText ,cname ,cdescription ,cprice
 console.log(id);
 
 
@@ -20,6 +20,9 @@ function Pageproduit(canap){
     let price = canap.price
     imgUrl=canap.imageUrl
     altText=canap.altTxt
+    cname=canap.name 
+    cdescription=canap.description
+    cprice=canap.price
     Picture(imageUrl,altTxt)
     Titre(name)
     Prix(price)
@@ -71,7 +74,10 @@ function Couleurs(colors){
         color:color,
         quantity:Number(quantity),
         imageUrl:imgUrl,
-        altTxt:altText
+        altTxt:altText,
+        name:cname,
+        description:cdescription,
+        price:cprice    
     } 
     localStorage.setItem(id,JSON.stringify(Cart)) 
     window.location.href = "cart.html"
