@@ -16,11 +16,12 @@ for (let i=0; i < Cartcontents; i++){
 function Display(Content){
     const Article = MakeArticle(Content)  
     ShowArticle(Article)
-    const div = MakeImage(Content)
-    Article.appendChild(div)
+    const Img = MakeImage(Content)
+    Article.appendChild(Img)
 
-    const CardItemContent =MakeCardItemContent(Content)
-    Article.appendChild(CardItemContent)
+    const CartItemContent = MakeCartContent(Content)
+    Article.appendChild(CartItemContent)
+    ShowArticle(Article)
 }
 
 function ShowArticle(Article){
@@ -47,20 +48,50 @@ function MakeImage(Content){
     
 }
 
-function MakeCardItemContent(Content){
-    const div = document.createElement("div")
-    div.classList.add("cart__item__content")
-    const description = document.createElement("div")
-    description.classList.add("cart__item__content__description")
+function MakeCartContent(Content){
+    const CartItemContent = document.createElement("div")
+    const Description= MakeDescription(Content)
+    const Settings= MakeSettings(Content)
+    CartItemContent.classList.add("cart__item__content")
+    CartItemContent.appendChild(Description)
+    CartItemContent.appendChild(Settings)
+    return CartItemContent
+}
+
+function MakeDescription(Content){
+    const Description = document.createElement("div")
+    Description.classList.add("cart__item__content__description")
     const h2 = document.createElement("h2")
     h2.textContent = Content.name
     const p = document.createElement("p")
     p.textContent = Content.description
     const pr = document.createElement("p")
     pr.textContent = Content.price + " €"
-    description.appendChild(h2)
-    description.appendChild(p)
-    description.appendChild(pr)
-    div.appendChild(description)
-    return div
+    Description.appendChild(h2)
+    Description.appendChild(p)
+    Description.appendChild(pr)
+    
+    return Description
+}
+function MakeSettings(Content){
+    const Settings = document.createElement("div")
+    Settings.classList.add("cart__item__content__settings")
+    AddQuantity(Content,Settings)
+    return Settings
+    
+}
+function AddQuantity(Content,Settings){
+    const Quantity = document.createElement("div")
+    Quantity.classList.add("cart__item__content__settings__quantity")
+    const P = document.createElement("p")
+    P.textContent ="Qté : "
+    Quantity.appendChild(P)
+    const Input = document.createElement("input")
+    Input.type = "number"
+    Input.classList.add("itemQuantity")
+    Input.name = "itemQuantity" 
+    Input.min = "1"
+    Input.max = "100"
+    Input.value = Content.quantity
+    Settings.appendChild(Input)
 }

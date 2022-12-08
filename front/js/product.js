@@ -80,7 +80,7 @@ function Couleurs(colors){
         price:cprice    
     } 
     localStorage.setItem(id,JSON.stringify(Cart)) 
-    window.location.href = "cart.html"
+    /*window.location.href = "cart.html"*/
   })
 
   
