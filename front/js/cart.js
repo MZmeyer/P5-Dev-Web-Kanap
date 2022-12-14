@@ -60,10 +60,23 @@ function GetStorage(data){
             </div>
             </article>`
             )
+            Total()
             
         }
 
-        
+        function Total() {
+            let totalWares = 0
+            let totalWarePrice = 0            
+            const Ware = document.querySelectorAll(".cart__item")            
+            Ware.forEach((Cart) => {
+                
+                totalWares += JSON.parse(Cart.dataset.quantity)
+                
+                totalWarePrice += Cart.dataset.quantity * Cart.dataset.price
+            });            
+            document.getElementById("totalQuantity").textContent = totalWares
+            document.getElementById("totalPrice").textContent = totalWarePrice
+        }
     
 
 
