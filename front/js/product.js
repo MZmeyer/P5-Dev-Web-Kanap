@@ -1,7 +1,7 @@
 let url = window.location.search
 let urlparam = new URLSearchParams(url)
 let id = urlparam.get("id")
-let imgUrl ,altText ,cname ,cdescription ,cprice
+
 console.log(id);
 
 
@@ -18,16 +18,13 @@ function Pageproduit(canap){
     let imageUrl = canap.imageUrl
     let name = canap.name
     let price = canap.price
-    imgUrl=canap.imageUrl
-    altText=canap.altTxt
-    cname=canap.name 
-    cdescription=canap.description
-    cprice=canap.price
+    
     Picture(imageUrl,altTxt)
     Titre(name)
     Prix(price)
     Description(description)
     Couleurs(colors)
+    Cartbutton(canap)
 }
 
 function Picture(imageUrl,altTxt){
@@ -62,26 +59,57 @@ function Couleurs(colors){
     }
     
   } 
-
+function Cartbutton(canap){
   let button = document.getElementById("addToCart")
-
   button.addEventListener("click",(e) =>{
     let color = document.getElementById("colors").value
     let quantity = document.getElementById("quantity").value    
       
         const Cart = {
-        id:id,
+        id:canap._id,
         color:color,
-        quantity:Number(quantity),
-        imageUrl:imgUrl,
-        altTxt:altText,
-        name:cname,
-        description:cdescription,
-        price:cprice    
+        quantity:Number(quantity)
+            
     } 
-    localStorage.setItem(id,JSON.stringify(Cart)) 
+    console.log(`${Cart.name}`, Cart )
+    addToCart(Cart, color)    
     /*window.location.href = "cart.html"*/
   })
+}
+ function addToCart(Cart, color) {
+    let Content = JSON.parse(localStorage.getItem("Cart"))
 
-  
-  
+    
+    if (Content == null) {
+        Content = []
+        Content.push(Cart)
+        localStorage.setItem("Cart", JSON.stringify(Content))               
+    }
+
+    
+    else if (Content != null) {        
+        for (i = 0; i < Content.length; i++) {
+            if (Content[i].id == Cart.id &&
+                Content[i].color == color
+            ) {
+                return (                    
+                    Content[i].quantity = Math.min(Content[i].quantity + Cart.quantity, 100),
+                    localStorage.setItem("Cart", JSON.stringify(Content))                    
+                )
+            }
+        }
+        for (i = 0; i < Content.length; i++) {            
+            if (Content[i].id == Cart.id &&
+                Content[i].color != color ||
+                Content[i].id != Cart.id
+            ) {
+                return (                    
+                    Content.push(Cart),
+                    localStorage.setItem("Cart", JSON.stringify(Content))
+                    
+                )
+            }
+        }
+
+    }
+} 

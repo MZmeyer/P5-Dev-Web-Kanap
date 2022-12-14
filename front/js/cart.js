@@ -1,97 +1,71 @@
-const Cartcontents = localStorage.length;
-const Carts =[];
-
-GetStorage()
-for (let Content of Carts){Display(Content)}
 
 
-function GetStorage(){
-for (let i=0; i < Cartcontents; i++){
-    const Content = localStorage.getItem(localStorage.key(i));
-    const ContentObject = JSON.parse(Content);
-    Carts.push(ContentObject)
+
+
+fetch(`http://localhost:3000/api/products/`)
+    .then((response) => response.json())
+    .then((data) => 
+    {
+     console.log(data)
+     GetStorage(data)   
     }
-}
+) 
 
-function Display(Content){
-    const Article = MakeArticle(Content)  
-    ShowArticle(Article)
-    const Img = MakeImage(Content)
-    Article.appendChild(Img)
-
-    const CartItemContent = MakeCartContent(Content)
-    Article.appendChild(CartItemContent)
-    ShowArticle(Article)
-}
-
-function ShowArticle(Article){
-    document.getElementById("cart__items").appendChild(Article)
-
-}
-
-function MakeArticle(Content){
-    const Article = document.createElement("article")
-    Article.classList.add("cart__item")
-    Article.dataset.id = Content.id
-    Article.dataset.color = Content.color
-    return Article
-}
-
-function MakeImage(Content){
-    const div = document.createElement("div")
-    div.classList.add("cart__item__img")
-    const Image = document.createElement("img")
-    Image.src = Content.imageUrl
-    Image.alt = Content.altTxt
-    div.appendChild(Image)
-    return div
+function GetStorage(data){
+    const Content = JSON.parse(localStorage.getItem("Cart"));  
     
-}
-
-function MakeCartContent(Content){
-    const CartItemContent = document.createElement("div")
-    const Description= MakeDescription(Content)
-    const Settings= MakeSettings(Content)
-    CartItemContent.classList.add("cart__item__content")
-    CartItemContent.appendChild(Description)
-    CartItemContent.appendChild(Settings)
-    return CartItemContent
-}
-
-function MakeDescription(Content){
-    const Description = document.createElement("div")
-    Description.classList.add("cart__item__content__description")
-    const h2 = document.createElement("h2")
-    h2.textContent = Content.name
-    const p = document.createElement("p")
-    p.textContent = Content.description
-    const pr = document.createElement("p")
-    pr.textContent = Content.price + " €"
-    Description.appendChild(h2)
-    Description.appendChild(p)
-    Description.appendChild(pr)
+    console.log(Content);
     
-    return Description
-}
-function MakeSettings(Content){
-    const Settings = document.createElement("div")
-    Settings.classList.add("cart__item__content__settings")
-    AddQuantity(Content,Settings)
-    return Settings
+    for (let Cart of Content){
+    for (let a = 0, b = data.length; a < b; a++){
+        if (Cart.id === data[a]._id) {
+            
+            Cart.name = data[a].name
+            Cart.price = data[a].price
+            Cart.imageUrl = data[a].imageUrl
+            Cart.altTxt = data[a].altTxt
+            Cart.description = data[a].description
+                }
     
-}
-function AddQuantity(Content,Settings){
-    const Quantity = document.createElement("div")
-    Quantity.classList.add("cart__item__content__settings__quantity")
-    const P = document.createElement("p")
-    P.textContent ="Qté : "
-    Quantity.appendChild(P)
-    const Input = document.createElement("input")
-    Input.type = "number"
-    Input.classList.add("itemQuantity")
-    Input.name = "itemQuantity" 
-    Input.min = "1"
-    Input.max = "100"
-    Input.value = Content.quantity
-    Settings.appendChild(Input)
-}
+            }
+    
+        }
+    Display(Content)    
+    console.log(Content)
+    
+    }    
+    
+    function Display(Content) {            
+        const article = document.getElementById("cart__items");            
+            article.innerHTML += Content.map((Cart) =>
+            `<article class="cart__item" data-id="${Cart.id}" data-color="${Cart.color}" data-quantity="${Cart.quantity}" data-price="${Cart.price}"> 
+            <div class="cart__item__img">
+            <img src="${Cart.imageUrl}" alt="${Cart.altTxt}">
+            </div>
+            <div class="cart__item__content">
+            <div class="cart__item__content__description">
+            <h2>${Cart.name}</h2>
+            <span>Couleur : ${Cart.color}</span>
+            <p data-price="${Cart.price}">Prix : ${Cart.price} €</p>
+            </div>
+            <div class="cart__item__content__settings">
+            <div class="cart__item__content__settings__quantity">
+            <p>Quantité : </p>
+            <input type="number" class="itemQuantity" name="itemQuantity" min="1" max="100" value="${Cart.quantity}">
+            </div>
+            <div class="cart__item__content__settings__delete">
+            <p class="deleteItem" data-id="${Cart.id}" data-color="${Cart.color}">Supprimer</p>
+            </div>
+            </div>
+            </div>
+            </article>`
+            )
+            
+        }
+
+        
+    
+
+
+
+
