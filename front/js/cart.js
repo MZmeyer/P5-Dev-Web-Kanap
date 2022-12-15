@@ -122,3 +122,10 @@ function GetStorage(data){
             })
          }
 
+const order = document.getElementById("order")
+order.addEventListener ("click", (e)=>Form(e))
+
+function Form(){    
+if (Content.length === 0 ) alert ("Panier vide !")
+
+}
