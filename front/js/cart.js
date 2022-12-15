@@ -61,7 +61,7 @@ function GetStorage(data){
             </article>`
             )
             Total()
-            
+            Delete()
         }
 
         function Total() {
@@ -78,7 +78,27 @@ function GetStorage(data){
             document.getElementById("totalPrice").textContent = totalWarePrice
         }
     
-
+        function Delete(){
+            const deletePurchase = document.querySelectorAll(".cart__item .deleteItem")        
+            deletePurchase.forEach((Cart) => {            
+            Cart.addEventListener("click", () => {                
+            let Content = JSON.parse(localStorage.getItem("Cart"))                
+            for (let a = 0, b = Content.length; a < b; a++)
+                        if (                        
+                            Content[a].id === Cart.dataset.id &&
+                            Content[a].color === Cart.dataset.color
+                        ) {                        
+                            const choice = [a];                        
+                            Content.splice(choice, 1)                         
+                            localStorage.Cart = JSON.stringify(Content)   
+                            const deleted = document.querySelector(
+                            `article[data-id="${Cart.dataset.id}"][data-color="${Cart.dataset.color}"]`)
+                            deleted.remove()                                                 
+                            Total(); 
+                        }
+                })
+            })
+        }
 
 
 
