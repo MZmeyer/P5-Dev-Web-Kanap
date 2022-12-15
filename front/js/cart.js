@@ -62,6 +62,7 @@ function GetStorage(data){
             )
             Total()
             Delete()
+            Quantity()
         }
 
         function Total() {
@@ -100,5 +101,24 @@ function GetStorage(data){
             })
         }
 
-
+        function Quantity(){
+            const article = document.querySelectorAll(".cart__item");    
+            article.forEach((Cart) => {
+                Cart.addEventListener("change", (newQuant) => {
+                    const Content = JSON.parse(localStorage.getItem("Cart"))            
+                    for (canap of Content)
+                        if (                    
+                            canap.id === Cart.dataset.id &&
+                            Cart.dataset.color === canap.color
+                        ) {                    
+                            canap.quantity = Math.min(newQuant.target.value, 100)                    
+                            localStorage.Cart = JSON.stringify(Content)                    
+                            Cart.dataset.quantity = newQuant.target.value                    
+                            Total();
+                        }
+                    console.log( canap.name, Cart.dataset.color)
+                    console.log(Content)
+                })
+            })
+         }
 
