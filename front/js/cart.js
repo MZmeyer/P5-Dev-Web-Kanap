@@ -84,13 +84,13 @@ function GetStorage(data){
             deletePurchase.forEach((Cart) => {            
             Cart.addEventListener("click", () => {                
             let Content = JSON.parse(localStorage.getItem("Cart"))                
-            for (let a = 0, b = Content.length; a < b; a++)
+            for (let i = 0; i < Content.length;  i++)
                         if (                        
                             Content[a].id === Cart.dataset.id &&
                             Content[a].color === Cart.dataset.color
                         ) {                        
-                            const choice = [a];                        
-                            Content.splice(choice, 1)                         
+                                                    
+                            Content.splice(a, 1)                         
                             localStorage.Cart = JSON.stringify(Content)   
                             const deleted = document.querySelector(
                             `article[data-id="${Cart.dataset.id}"][data-color="${Cart.dataset.color}"]`)
@@ -122,10 +122,47 @@ function GetStorage(data){
             })
          }
 
+
+
+
 const order = document.getElementById("order")
 order.addEventListener ("click", (e)=>Form(e))
 
-function Form(){    
+function Form(){
+    /*const Content = JSON.parse(localStorage.getItem("Cart"))
 if (Content.length === 0 ) alert ("Panier vide !")
-
+window.localStorage.clear*/
+/*const contact = Obj()*/
+fetch("http://localhost:3000/api/products/order", {
+        method: "POST",
+        body:JSON.stringify(contact),
+        headers:{
+            "Content-type":"application/json",
+            "Access-Control-Allow-Origin":"application/json"
+        }
+        })
+        .then((response)=> response.json())
+        .then((response) => console.log(response))
 }
+
+/*function Obj(){
+    const content = JSON.parse(localstorage.getItem("Cart"))
+    const firstname = document.getElementById("firstName").value
+    const lastname = document.getElementById("lastName").value
+    const address = document.getElementById("address").value
+    const city = doucment.getElementById("city").value
+    const email = document.getElementById("email").value
+    const ids = []
+    content.forEach((Cart) => ids.push(Cart.id))
+    const contact = {
+        contact:{
+            firstName:firstname,
+            lastName:lastname,
+            address:address,
+            city:city,
+            email:email           
+        },
+        products:ids
+}
+return contact
+}*/
