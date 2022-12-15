@@ -84,13 +84,13 @@ function GetStorage(data){
             deletePurchase.forEach((Cart) => {            
             Cart.addEventListener("click", () => {                
             let Content = JSON.parse(localStorage.getItem("Cart"))                
-            for (let i = 0; i < Content.length;  i++)
+            for (let i = 0; i<Content.length; i++)
                         if (                        
-                            Content[a].id === Cart.dataset.id &&
-                            Content[a].color === Cart.dataset.color
+                            Content[i].id === Cart.dataset.id &&
+                            Content[i].color === Cart.dataset.color
                         ) {                        
-                                                    
-                            Content.splice(a, 1)                         
+                                                   
+                            Content.splice(i, 1)                         
                             localStorage.Cart = JSON.stringify(Content)   
                             const deleted = document.querySelector(
                             `article[data-id="${Cart.dataset.id}"][data-color="${Cart.dataset.color}"]`)
