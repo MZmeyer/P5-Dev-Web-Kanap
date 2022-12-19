@@ -1,4 +1,4 @@
-
+const Cart=[];
 
 
 
@@ -25,45 +25,93 @@ function GetStorage(data){
             Cart.imageUrl = data[i].imageUrl
             Cart.altTxt = data[i].altTxt
             Cart.description = data[i].description
+            
+            
                 }
-    
+                   
             }
-    
-        }
-    Display(Content)    
+            
+            
+     Display(Cart,Content)
     console.log(Content)
     
     }    
     
-    function Display(Content) {            
-        const article = document.getElementById("cart__items");            
-            article.innerHTML += Content.map((Cart) =>
-            `<article class="cart__item" data-id="${Cart.id}" data-color="${Cart.color}" data-quantity="${Cart.quantity}" data-price="${Cart.price}"> 
-            <div class="cart__item__img">
-            <img src="${Cart.imageUrl}" alt="${Cart.altTxt}">
-            </div>
-            <div class="cart__item__content">
-            <div class="cart__item__content__description">
-            <h2>${Cart.name}</h2>
-            <span>Couleur : ${Cart.color}</span>
-            <p data-price="${Cart.price}">Prix : ${Cart.price} €</p>
-            </div>
-            <div class="cart__item__content__settings">
-            <div class="cart__item__content__settings__quantity">
-            <p>Quantité : </p>
-            <input type="number" class="itemQuantity" name="itemQuantity" min="1" max="100" value="${Cart.quantity}">
-            </div>
-            <div class="cart__item__content__settings__delete">
-            <p class="deleteItem" data-id="${Cart.id}" data-color="${Cart.color}">Supprimer</p>
-            </div>
-            </div>
-            </div>
-            </article>`
-            )
-            Total()
-            Delete()
-            Quantity()
+    function Display(Cart) {  
+        const cartitem = document.getElementById("cart__items") 
+        const cartitemcontent = document.getElementById("cart__item__content") 
+        const cartitemcontentdescription = document.getElementById("cart__item__content__description")
+        const cartitemcontentsettings = document.getElementById("cart__item__content__settings")
+        const cartitemcontentsettingsquantity = document.getElementById("cart__item__content__settings__quantity")  
+        const cartitemcontentsettingsdelete = document.getElementById("cart__item__content__settings__delete")
+             
+        const article = document.createElement("article")
+        const div = document.createElement("div")
+        const div2 = document.createElement("div")
+        const div3 = document.createElement("div")
+        const div4 = document.createElement("div")
+        const div5 = document.createElement("div")
+        const div6 = document.createElement("div")
+        const image = document.createElement("img")
+        const h2 = document.createElement("h2")
+        const span = document.createElement("span")
+        const pdata = document.createElement("p")
+        const pquant = document.createElement("p")
+        const input = document.createElement("input") 
+        const pdelete = document.createElement("p")
+        
+        cartitem.appendChild(article);
+        article.classList.add("cart__item");
+        article.setAttribute(`id`,`${Cart.id}`);
+        article.setAttribute(`color`,`${Cart.color}`);
+        article.setAttribute(`quantity`,`${Cart.quantity}`);
+        article.setAttribute(`price`,`${Cart.price}`);
+        article.appendChild(div);
+        div.classList.add("cart__item__img");
+        image.src = `${Cart.imageUrl}`;
+        image.alt = `${Cart.altTxt}`;
+        div.appendChild(image);
+        div2.classList.add("cart__item__content");
+        article.appendChild(div2);
+        div3.classList.add("cart__item__content__description");
+        div2.appendChild(div3);
+        h2.textContent = `${Cart.name}`;
+        div3.appendChild(h2);
+        span.textContent = "Couleur:  "+ `${Cart.color}`;
+        div3.appendChild(span);
+        pdata.setAttribute(`price`,`${Cart.price}`);
+        pdata.textContent = "Prix  :"+ `${Cart.price}`+ "€";
+        div3.appendChild(pdata);
+        div4.classList.add("cart__item__content__settings");
+        article.appendChild(div4);
+        div5.classList.add("cart__item__content__settings__quantity");
+        div4.appendChild(div5);
+        pquant.textContent = "Quantité : ";
+        div5.appendChild(pquant);
+        input.type = "number";
+        input.classList.add("itemQuantity");
+        input.name = "itemQuantity";
+        input.min = "1";
+        input.max = "100";
+        input.value = `${Cart.quantity}`;
+        div5.appendChild(input);
+        div6.classList.add("cart__item__content__settings__delete");
+        article.appendChild(div6);
+        pdelete.classList.add("deleteItem");
+        pdelete.setAttribute(`id`,`${Cart.id}`);
+        pdelete.setAttribute(`color`,`${Cart.color}`);
+        pdelete.textContent = "Supprimer";
+        div6.appendChild(pdelete);
+
+
+
+        
+        
         }
+        /*
+        Total()
+        Delete()
+        Quantity()
 
         function Total() {
             let totalWares = 0
