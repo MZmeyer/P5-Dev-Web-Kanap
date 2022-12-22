@@ -62,10 +62,10 @@ function GetStorage(data){
         
         cartitem.appendChild(article);
         article.classList.add("cart__item");
-        article.setAttribute(`id`,`${Cart.id}`);
-        article.setAttribute(`color`,`${Cart.color}`);
-        article.setAttribute(`quantity`,`${Cart.quantity}`);
-        article.setAttribute(`price`,`${Cart.price}`);
+        article.setAttribute(`data-id`,`${Cart.id}`);
+        article.setAttribute(`data-color`,`${Cart.color}`);
+        article.setAttribute(`data-quantity`,`${Cart.quantity}`);
+        article.setAttribute(`data-price`,`${Cart.price}`);
         article.appendChild(div);
         div.classList.add("cart__item__img");
         image.src = `${Cart.imageUrl}`;
@@ -98,8 +98,8 @@ function GetStorage(data){
         div6.classList.add("cart__item__content__settings__delete");
         article.appendChild(div6);
         pdelete.classList.add("deleteItem");
-        pdelete.setAttribute(`id`,`${Cart.id}`);
-        pdelete.setAttribute(`color`,`${Cart.color}`);
+        pdelete.setAttribute(`data-id`,`${Cart.id}`);
+        pdelete.setAttribute(`data-color`,`${Cart.color}`);
         pdelete.textContent = "Supprimer";
         div6.appendChild(pdelete);
 
@@ -108,11 +108,11 @@ function GetStorage(data){
         
         
         }
-        /*
+        
         Total()
         Delete()
         Quantity()
-
+    }
         function Total() {
             let totalWares = 0
             let totalWarePrice = 0            
@@ -128,8 +128,8 @@ function GetStorage(data){
         }
     
         function Delete(){
-            const deletePurchase = document.querySelectorAll(".cart__item .deleteItem")        
-            deletePurchase.forEach((Cart) => {            
+            const deleteCart = document.querySelectorAll(".cart__item .deleteItem")        
+            deleteCart.forEach((Cart) => {            
             Cart.addEventListener("click", () => {                
             let Content = JSON.parse(localStorage.getItem("Cart"))                
             for (let i = 0; i<Content.length; i++)
@@ -174,26 +174,26 @@ function GetStorage(data){
 
 
 const order = document.getElementById("order")
-order.addEventListener ("click", (e)=>Form(e))
+order.addEventListener ("click", ()=>Form())
 
-function Form(){
-    /*const Content = JSON.parse(localStorage.getItem("Cart"))
+function Form(Obj){
+    const Content = JSON.parse(localStorage.getItem("Cart"))
 if (Content.length === 0 ) alert ("Panier vide !")
-window.localStorage.clear*/
-/*const contact = Obj()*/
+window.localStorage.clear
+const contact = Obj()
 fetch("http://localhost:3000/api/products/order", {
         method: "POST",
         body:JSON.stringify(contact),
         headers:{
             "Content-type":"application/json",
-            "Access-Control-Allow-Origin":"application/json"
+            "Access-Control-Allow-Origin":"*"
         }
         })
         .then((response)=> response.json())
         .then((response) => console.log(response))
 }
 
-/*function Obj(){
+function Obj(){
     const content = JSON.parse(localstorage.getItem("Cart"))
     const firstname = document.getElementById("firstName").value
     const lastname = document.getElementById("lastName").value
@@ -213,4 +213,4 @@ fetch("http://localhost:3000/api/products/order", {
         products:ids
 }
 return contact
-}*/
+}
