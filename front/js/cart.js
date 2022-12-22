@@ -39,11 +39,7 @@ function GetStorage(data){
     
     function Display(Cart) {  
         const cartitem = document.getElementById("cart__items") 
-        const cartitemcontent = document.getElementById("cart__item__content") 
-        const cartitemcontentdescription = document.getElementById("cart__item__content__description")
-        const cartitemcontentsettings = document.getElementById("cart__item__content__settings")
-        const cartitemcontentsettingsquantity = document.getElementById("cart__item__content__settings__quantity")  
-        const cartitemcontentsettingsdelete = document.getElementById("cart__item__content__settings__delete")
+        
              
         const article = document.createElement("article")
         const div = document.createElement("div")
@@ -176,7 +172,7 @@ function GetStorage(data){
 const order = document.getElementById("order")
 order.addEventListener ("click", ()=>Form())
 
-function Form(Obj){
+function Form(){
     const Content = JSON.parse(localStorage.getItem("Cart"))
 if (Content.length === 0 ) alert ("Panier vide !")
 window.localStorage.clear
@@ -194,14 +190,14 @@ fetch("http://localhost:3000/api/products/order", {
 }
 
 function Obj(){
-    const content = JSON.parse(localstorage.getItem("Cart"))
-    const firstname = document.getElementById("firstName").value
-    const lastname = document.getElementById("lastName").value
-    const address = document.getElementById("address").value
-    const city = doucment.getElementById("city").value
-    const email = document.getElementById("email").value
-    const ids = []
-    content.forEach((Cart) => ids.push(Cart.id))
+    const content = JSON.parse(localStorage.getItem("Cart"));
+    const firstname = document.getElementById("firstName").value;
+    const lastname = document.getElementById("lastName").value;
+    const address = document.getElementById("address").value;
+    const city = document.getElementById("city").value;
+    const email = document.getElementById("email").value;
+    const ids = [];
+    content.forEach((Cart) => ids.push(Cart.id));
     const contact = {
         contact:{
             firstName:firstname,
@@ -212,5 +208,6 @@ function Obj(){
         },
         products:ids
 }
+console.log(ids)
 return contact
 }
