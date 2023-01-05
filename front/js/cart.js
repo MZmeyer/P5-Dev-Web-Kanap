@@ -140,6 +140,7 @@ function GetStorage(data){
                             `article[data-id="${Cart.dataset.id}"][data-color="${Cart.dataset.color}"]`)
                             deleted.remove()                                                 
                             Total(); 
+                            ClearItem();
                         }
                 })
             })
@@ -170,23 +171,33 @@ function GetStorage(data){
 
 
 const order = document.getElementById("order")
-order.addEventListener ("click", ()=>Form())
+order.addEventListener  ("click", ()=>Form())
 
 function Form(){
     const Content = JSON.parse(localStorage.getItem("Cart"))
-if (Content.length === 0 ) alert ("Panier vide !")
-window.localStorage.clear
+if (Content.length === 0 ) {
+    alert ("Panier vide !")
+    return
+}
+if (InvalidEmail()) return
+
 const contact = Obj()
-fetch("http://localhost:3000/api/products/order", {
+fetch("http://127.0.0.1:3000/api/products/order", {
         method: "POST",
         body:JSON.stringify(contact),
         headers:{
-            "Content-type":"application/json",
-            "Access-Control-Allow-Origin":"*"
+            "Content-Type":"application/json",
+            
+            
+            
         }
         })
         .then((response)=> response.json())
-        .then((response) => console.log(response))
+        .then((response) => {
+            const orderId = response.orderId
+            window.location.href = "./confirmation.html"+"?orderId=" + orderId
+        })
+        
 }
 
 function Obj(){
@@ -209,5 +220,20 @@ function Obj(){
         products:ids
 }
 console.log(ids)
+
 return contact
+}
+
+function InvalidEmail() {
+    const email= document.getElementById("email").value
+    const regex= /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/
+    if (regex.test(email) === false){
+        alert("Adresse Mail non valide")
+        return true
+    }
+    return false
+}
+function ClearItem(){
+    if (JSON.parse(localStorage.getItem("Cart")).length === 0) {
+         localStorage.removeItem("Cart")}
 }
