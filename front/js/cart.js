@@ -1,7 +1,7 @@
 const Cart=[];
 
 
-
+//Fetch - Récupération de l'API
 fetch(`http://localhost:3000/api/products/`)
     .then((response) => response.json())
     .then((data) => 
@@ -10,7 +10,7 @@ fetch(`http://localhost:3000/api/products/`)
      GetStorage(data)   
     }
 ) 
-
+//Fonction de récupération du localStorage puis création de chaque article à l'aide de la fonction Display
 function GetStorage(data){
     const Content = JSON.parse(localStorage.getItem("Cart"));  
     
@@ -36,18 +36,16 @@ function GetStorage(data){
     console.log(Content)
     
     }    
-    
+//Fonction d'affichage,modification(quantité,couleur) de l'article  
     function Display(Cart) {  
-        const cartitem = document.getElementById("cart__items") 
-        
-             
+        const cartitem = document.getElementById("cart__items")                    
         const article = document.createElement("article")
-        const div = document.createElement("div")
-        const div2 = document.createElement("div")
-        const div3 = document.createElement("div")
-        const div4 = document.createElement("div")
-        const div5 = document.createElement("div")
-        const div6 = document.createElement("div")
+        const cartItemImg = document.createElement("div")
+        const cartItemContent = document.createElement("div")
+        const cartItemContentDescription = document.createElement("div")
+        const cartItemContentSettings = document.createElement("div")
+        const cartItemContentSettingsQuantity = document.createElement("div")
+        const cartItemContentSettingsDelete = document.createElement("div")
         const image = document.createElement("img")
         const h2 = document.createElement("h2")
         const span = document.createElement("span")
@@ -62,42 +60,42 @@ function GetStorage(data){
         article.setAttribute(`data-color`,`${Cart.color}`);
         article.setAttribute(`data-quantity`,`${Cart.quantity}`);
         article.setAttribute(`data-price`,`${Cart.price}`);
-        article.appendChild(div);
-        div.classList.add("cart__item__img");
+        article.appendChild(cartItemImg);
+        cartItemImg.classList.add("cart__item__img");
         image.src = `${Cart.imageUrl}`;
         image.alt = `${Cart.altTxt}`;
-        div.appendChild(image);
-        div2.classList.add("cart__item__content");
-        article.appendChild(div2);
-        div3.classList.add("cart__item__content__description");
-        div2.appendChild(div3);
+        cartItemImg.appendChild(image);
+        cartItemContent.classList.add("cart__item__content");
+        article.appendChild(cartItemContent);
+        cartItemContentDescription.classList.add("cart__item__content__description");
+        cartItemContent.appendChild(cartItemContentDescription);
         h2.textContent = `${Cart.name}`;
-        div3.appendChild(h2);
+        cartItemContentDescription.appendChild(h2);
         span.textContent = "Couleur:  "+ `${Cart.color}`;
-        div3.appendChild(span);
+        cartItemContentDescription.appendChild(span);
         pdata.setAttribute(`price`,`${Cart.price}`);
         pdata.textContent = "Prix  :"+ `${Cart.price}`+ "€";
-        div3.appendChild(pdata);
-        div4.classList.add("cart__item__content__settings");
-        article.appendChild(div4);
-        div5.classList.add("cart__item__content__settings__quantity");
-        div4.appendChild(div5);
+        cartItemContentDescription.appendChild(pdata);
+        cartItemContentSettings.classList.add("cart__item__content__settings");
+        article.appendChild(cartItemContentSettings);
+        cartItemContentSettingsQuantity.classList.add("cart__item__content__settings__quantity");
+        cartItemContentSettings.appendChild(cartItemContentSettingsQuantity);
         pquant.textContent = "Quantité : ";
-        div5.appendChild(pquant);
+        cartItemContentSettingsQuantity.appendChild(pquant);
         input.type = "number";
         input.classList.add("itemQuantity");
         input.name = "itemQuantity";
         input.min = "1";
         input.max = "100";
         input.value = `${Cart.quantity}`;
-        div5.appendChild(input);
-        div6.classList.add("cart__item__content__settings__delete");
-        article.appendChild(div6);
+        cartItemContentSettingsQuantity.appendChild(input);
+        cartItemContentSettingsDelete.classList.add("cart__item__content__settings__delete");
+        article.appendChild(cartItemContentSettingsDelete);
         pdelete.classList.add("deleteItem");
         pdelete.setAttribute(`data-id`,`${Cart.id}`);
         pdelete.setAttribute(`data-color`,`${Cart.color}`);
         pdelete.textContent = "Supprimer";
-        div6.appendChild(pdelete);
+        cartItemContentSettingsDelete.appendChild(pdelete);
 
 
 
@@ -109,6 +107,7 @@ function GetStorage(data){
         Delete()
         Quantity()
     }
+    //Fonction de calcul du total de la commande
         function Total() {
             let totalWares = 0
             let totalWarePrice = 0            
@@ -122,7 +121,7 @@ function GetStorage(data){
             document.getElementById("totalQuantity").textContent = totalWares
             document.getElementById("totalPrice").textContent = totalWarePrice
         }
-    
+    //Fonction de suppression d'article
         function Delete(){
             const deleteCart = document.querySelectorAll(".cart__item .deleteItem")        
             deleteCart.forEach((Cart) => {            
@@ -145,7 +144,7 @@ function GetStorage(data){
                 })
             })
         }
-
+//Fonction de modification de la quantité
         function Quantity(){
             const article = document.querySelectorAll(".cart__item");    
             article.forEach((Cart) => {
@@ -173,15 +172,19 @@ function GetStorage(data){
 const order = document.getElementById("order")
 order.addEventListener  ("click", ()=>Form())
 
+//Fonction de création et de vérification de formulaire
 function Form(){
     const Content = JSON.parse(localStorage.getItem("Cart"))
 if (Content.length === 0 ) {
     alert ("Panier vide !")
     return
 }
-if (InvalidEmail()) return
+if (InvalidEmail()) return;
+if (InvalidFirstName()) return;
+if (InvalidLastName()) return;
 
 const contact = Obj()
+//Fetch envoi des données de formulaire puis renvoi vers page de confirmation
 fetch("http://127.0.0.1:3000/api/products/order", {
         method: "POST",
         body:JSON.stringify(contact),
@@ -200,6 +203,7 @@ fetch("http://127.0.0.1:3000/api/products/order", {
         
 }
 
+//Fonction de création d'objet contact
 function Obj(){
     const content = JSON.parse(localStorage.getItem("Cart"));
     const firstname = document.getElementById("firstName").value;
@@ -223,7 +227,7 @@ console.log(ids)
 
 return contact
 }
-
+//Fonction de vérification d'e-mail
 function InvalidEmail() {
     const email= document.getElementById("email").value
     const regex= /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/
@@ -233,6 +237,27 @@ function InvalidEmail() {
     }
     return false
 }
+//Fonction de vérification de prénom
+function InvalidFirstName(){
+    const firstName=document.getElementById("firstName").value
+    const regex= /^[A-Za-z]+$/
+    if (regex.test(firstName) ===false){
+        alert("Prénom invalide")
+        return true
+    }
+    return false
+}
+//Fonction de vérification de nom de famille
+function InvalidLastName(){
+    const lastName=document.getElementById("lastName").value
+    const regex= /^[A-Za-z]+$/
+    if (regex.test(lastName) ===false){
+        alert("Nom invalide")
+        return true
+    }
+    return false
+}
+//Fonction de nettoyage localstorage si panier vide
 function ClearItem(){
     if (JSON.parse(localStorage.getItem("Cart")).length === 0) {
          localStorage.removeItem("Cart")}
